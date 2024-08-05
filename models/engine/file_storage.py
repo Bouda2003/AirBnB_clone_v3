@@ -4,6 +4,7 @@ Contains the FileStorage class
 """
 
 import json
+import models
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -88,5 +89,5 @@ class FileStorage:
             for x in all_classes:
                 count += len(models.storage.all(x).values())
         else:
-            count += len(models.storage.all(clas).values())
+            count = len(models.storage.all(cls).values())
         return count
