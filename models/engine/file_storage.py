@@ -72,12 +72,12 @@ class FileStorage:
 
     def get(self, cls, id):
         """Returns the object based on the class and id or none if no found"""
-        if cls not in classes:
+        if cls.__name__ not in classes:
             return None
-
-        all_classes = models.storage.all(cls)
-        if (cls + '.' + id) in all_classes:
-            return all_classes[cls + '.' + id]
+        all_classes = self.all(cls)
+        cls_nm = cls.__name__
+        if (cls_nm + '.' + id) in all_classes:
+            return all_classes[cls_nm + '.' + id]
         return None
 
     def count(self, cls=None):
