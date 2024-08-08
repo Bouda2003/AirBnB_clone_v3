@@ -51,8 +51,11 @@ def post_state():
     """
     Creates a State
     """
+    print('before checking json')
     if not request.json:
+        print('before aborting')
         abort(400, description="Not a JSON")
+    print('after checking json')
 
     if 'name' not in request.get_json():
         abort(400, description="Missing name")
