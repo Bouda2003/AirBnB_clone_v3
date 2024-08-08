@@ -51,7 +51,7 @@ def post_state():
     """
     Creates a State
     """
-    if not request.get_json():
+    if not request.json:
         abort(400, description="Not a JSON")
 
     if 'name' not in request.get_json():
@@ -73,7 +73,7 @@ def put_state(state_id):
     if not state:
         abort(404)
 
-    if not request.get_json():
+    if not request.json:
         abort(400, description="Not a JSON")
 
     ignore = ['id', 'created_at', 'updated_at']
