@@ -129,7 +129,7 @@ class TestFileStorage(unittest.TestCase):
         dic = {"name": "done"}
         instance = State(**dic)
         storage.new(instance)
-        dic = {"name": "Mexico", "state_id": state.id}
+        dic = {"name": "Mexico", "state_id": instance.id}
         city = City(**dic)
         storage.new(city)
         storage.save()

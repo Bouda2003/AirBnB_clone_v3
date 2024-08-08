@@ -89,7 +89,7 @@ class TestFileStorage(unittest.TestCase):
         """Test that save properly saves objects to file.json"""
 
     def test_get_db(self):
-        """Tests method for obtaining 
+        """Tests method for obtaining
         an instance db storage"""
         dic = {"name": "done"}
         instance = State(**dic)
@@ -103,7 +103,7 @@ class TestFileStorage(unittest.TestCase):
         dic = {"name": "done"}
         instance = State(**dic)
         storage.new(instance)
-        dic = {"name": "Mexico", "state_id": state.id}
+        dic = {"name": "Mexico", "state_id": instance.id}
         city = City(**dic)
         storage.new(city)
         storage.save()
