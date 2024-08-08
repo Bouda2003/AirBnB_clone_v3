@@ -81,9 +81,8 @@ class DBStorage:
             return None
 
         all_classes = self.all(cls)
-        for x in all_classes:
-            if (x['id'] == id):
-                return x
+        if (cls + '.' + id) in all_classes:
+            return all_classes[cls + '.' + id]
         return None
 
     def count(self, cls=None):
