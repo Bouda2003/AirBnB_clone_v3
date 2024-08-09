@@ -6,6 +6,11 @@ from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 
 
+@app_views.errorhandler(415)
+def wrong_type(error):
+    return make_response(jsonify({'error': 'Not a JSON'}), 400)
+
+
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
     """
@@ -51,11 +56,8 @@ def post_state():
     """
     Creates a State
     """
-    print('before checking json')
-    if not request.json:
-        print('before aborting')
-        abort(400, description="Not a JSON")
-    print('after checking json')
+    if not request.get_json():
+        abort(400, "Not a JSON")
 
     if 'name' not in request.get_json():
         abort(400, description="Missing name")
