@@ -6,13 +6,9 @@ from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 
 
-@app_views.errorhandler(415)
-def wrong_type(error):
-    return make_response(jsonify({'error': 'Not a JSON'}), 400)
-
 
 @app_views.route('/cities', methods=['GET'], strict_slashes=False)
-def get_states():
+def get_cities():
     """
     Retrieves the list of all State objects
     """
@@ -24,7 +20,7 @@ def get_states():
 
 
 @app_views.route('/cities/<state_id>', methods=['GET'], strict_slashes=False)
-def get_state(state_id):
+def get_city(state_id):
     """ Retrieves a specific State """
     state = storage.get(City, state_id)
     if not state:
@@ -35,7 +31,7 @@ def get_state(state_id):
 
 @app_views.route('/cities/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_state(state_id):
+def delete_cities(state_id):
     """
     Deletes a State Object
     """
@@ -52,7 +48,7 @@ def delete_state(state_id):
 
 
 @app_views.route('/cities', methods=['POST'], strict_slashes=False)
-def post_state():
+def post_cities():
     """
     Creates a State
     """
@@ -69,7 +65,7 @@ def post_state():
 
 
 @app_views.route('/cities/<state_id>', methods=['PUT'], strict_slashes=False)
-def put_state(state_id):
+def put_cites(state_id):
     """
     Updates a State
     """
