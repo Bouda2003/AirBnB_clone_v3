@@ -79,6 +79,7 @@ def post_place(city_id):
         abort(404)
 
     data = request.get_json()
+    data['city_id'] = city_id
     instance = Place(**data)
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
