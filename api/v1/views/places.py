@@ -2,6 +2,7 @@
 """ objects that handle all default RestFul API actions for States """
 from models.place import Place
 from models.city import City
+from models.user import User
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
