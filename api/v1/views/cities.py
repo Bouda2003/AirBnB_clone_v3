@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ objects that handle all default RestFul API actions for States """
 from models.city import City
+from models.state import State
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
@@ -9,13 +10,13 @@ from flask import abort, jsonify, make_response, request
 @app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
 def get_cities_of_state(state_id):
     """gets all cities of a certain state"""
+    if storage.get(State, state_id) is None:
+        abort(404)
     cities = storage.all(City).values()
     state_cities = []
     for city in cities:
         if city.to_dict()['state_id'] == state_id:
             state_cities.append(city.to_dict())
-    if len(state_cities) == 0:
-        abort(404)
     return jsonify(state_cities)
 
 
