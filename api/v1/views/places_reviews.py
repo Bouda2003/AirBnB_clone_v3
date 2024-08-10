@@ -80,7 +80,7 @@ def post_review(place_id):
 
     data = request.get_json()
     data['place_id'] = place_id
-    instance = State(**data)
+    instance = Review(**data)
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
 
