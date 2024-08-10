@@ -6,6 +6,18 @@ from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 
 
+@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
+def get_cities_of_state(state_id):
+    """gets all cities of a certain state"""
+    cities = storage.all(City).values()
+    state_cities = []
+    for city in cities:
+        if city.to_dict()['state_id'] == state_id:
+            state_cities.append(city.to_dict())
+    if len(state_cities) == 0:
+        abort(404)
+    return jsonify(state_cities)
+
 
 @app_views.route('/cities', methods=['GET'], strict_slashes=False)
 def get_cities():
@@ -47,10 +59,10 @@ def delete_cities(state_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/cities', methods=['POST'], strict_slashes=False)
-def post_cities():
+@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+def post_cities(state_id):
     """
-    Creates a State
+    Creates a City
     """
     if not request.get_json():
         abort(400, "Not a JSON")
@@ -58,8 +70,11 @@ def post_cities():
     if 'name' not in request.get_json():
         abort(400, description="Missing name")
 
+    if storage.get(State, state_id) is None:
+        abort(404)
     data = request.get_json()
     instance = City(**data)
+    instance.state_id = state_id
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
 
@@ -77,7 +92,7 @@ def put_cites(state_id):
     if not request.json:
         abort(400, description="Not a JSON")
 
-    ignore = ['id', 'created_at', 'updated_at']
+    ignore = ['id', 'created_at', 'updated_at', 'state_id']
 
     data = request.get_json()
     for key, value in data.items():
